@@ -1154,7 +1154,8 @@ class Client:
             deadline = time() + parse_timedelta(timeout)
         else:
             deadline = None
-        while n_workers and len(info["workers"]) < n_workers:
+        workers_count = len(info["workers"]) # want to wait for all workers
+        while n_workers and len(info["workers"]) < workers_count:
             if deadline and time() > deadline:
                 raise TimeoutError(
                     "Only %d/%d workers arrived after %s"
